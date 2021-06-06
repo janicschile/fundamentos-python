@@ -24,12 +24,12 @@ for x in range(0, maximo + 1, 5):
 def divisible(maximo):
     for x in range(1, maximo + 1 , 1):
         if (x/10).is_integer():
-            print(f"{x} Coding Dojo")
-            #print("Coding Dojo")
+            #print(f"{x} Coding Dojo")   # intercambiar para mostrar digito
+            print("Coding Dojo")         # intercambiar para mostrar digito
             continue
         elif (x/5).is_integer():
-            print(f"{x} Coding")
-            #print("Coding")
+            #print(f"{x} Coding")        # intercambiar para mostrar digito
+            print("Coding")              # intercambiar para mostrar digito
             continue 
         else:
             print(x)
@@ -63,12 +63,13 @@ print("La suma total es de: " + "{:,}".format(impares(cantMax)).replace(",",".")
 # Ejercicio #5 - Cuenta regresiva por cuatro : imprime números positivos del 2018 al 0, restando 4 en cada iteración.
 def regresiva(cantMax):
     print(cantMax)
-    cantMax -= 4
+    cantMax -= divisor
     if cantMax > 0:
         regresiva(cantMax)
     else:
         print("No es posible seguir restando")
 cantMax = 2018
+divisor = 4
 regresiva(cantMax)
 ###
 ###
@@ -87,3 +88,26 @@ for i in range(lowNum, highNum + 1):
 ###
 ###
 
+# Ejercicio BONUS - BONUS: ¿Cómo se puede detectar si un número es primo? 
+#                          ¿Cómo retornar una lista con los primos entre el 1 y el 1000?
+#####################################
+# Metodo con "criba de Eratóstenes"
+#####################################
+def primos(maximo):
+    
+    array = []                              # Se declara array inicial vacia.
+    for x in range(2, maximo + 1 , 1):      
+        array.append(x)                     # Agregamos los datos a la variable array desde 2 hasta el maximo.
+
+    for i in range(2, maximo + 1, 1):
+        for x in range(2, maximo + 1, 1):
+            if (x * i) <= maximo:           # Garantizamos que solo llegue hasta el maximo dado en la funcion
+                if (x * i) in array:        # Si el valor de x*i se encuentra en el array, seguimos
+                    array.remove(x * i)     #  Eliminamos el valor del array
+    return array
+
+maximo= 100
+print(primos(maximo))
+
+# Ref: https://www.superprof.es/apuntes/escolar/matematicas/aritmetica/divisibilidad/numeros-primos.html
+# Web que me ilumino con la Criba de Eratóstenes.
