@@ -6,7 +6,7 @@ for x in range(10 + 1):
 
 
 # Ejercicio #2 - Imprime todos los números impares del 0 al 3000
-for x in range(1, 10 + 1, 2):
+for x in range(5, 10 + 1, 2):
     print(x)
 ####
 ####
