@@ -88,11 +88,12 @@ for i in range(lowNum, highNum + 1):
 ###
 ###
 
+##################################################################################################
 # Ejercicio BONUS - BONUS: ¿Cómo se puede detectar si un número es primo? 
 #                          ¿Cómo retornar una lista con los primos entre el 1 y el 1000?
-#####################################
+##################################################################################################
 # Metodo con "criba de Eratóstenes"
-#####################################
+##################################################################################################
 def primos(maximo):
     
     array = []                              # Se declara array inicial vacia.
