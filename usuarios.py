@@ -146,10 +146,10 @@ def menuSistema():
 
     if opcion == 6 :
         screen_clear()
-        print(bdUsuarios)
-        print(dataCliente.balance)
+        #print(bdUsuarios)
+        #print(dataCliente.balance)
         guardarArchivoClientes()
-        os.system("Pause")
+        #os.system("Pause")
 
 
 
