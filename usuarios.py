@@ -16,7 +16,7 @@ def leerArchivoClientes():
     bd.close()
     return bdUsuarios
 
-def guardarArchivoClientes():
+def guardarArchivoClientes(bdUsuarios):
     bd = open("bdusuarios.txt", "w")
     bd.write(str(bdUsuarios))
     bd.close()
@@ -52,22 +52,81 @@ def screen_clear():
     else:
         _ = os.system('cls') # Windows
 
+def titulo():
+    print("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
+    print("▓▓▓▓▓▓▓▓▓╔═════════════════════════════════╗▓▓▓▓▓▓▓▓▓")
+    print("▓▓▓▓▓▓▓▓▓║       CAJERO PYTHON 1.0         ║░░▓▓▓▓▓▓▓")
+    print("▓▓▓▓▓▓▓▓▓╚═════════════════════════════════╝░░▓▓▓▓▓▓▓")
+    print("▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓▓▓▓▓▓")
+    print("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
+
+
+
+def cajeroOnline():
+    screen_clear()
+    titulo()
+    creaCuenta = int(input("\n Opcion 1: Ingreso Clientes\n Opcion 2: Crear Cuenta\n Seleccionar Opcion (1/2): "))
+    if creaCuenta == 1:
+        return ""
+
+    if creaCuenta == 2:
+        # paso 1
+        screen_clear(); titulo();
+        creaUsuario  = input("\n Ingrese su Nombre de Usuario : ")
+        creaPassword = input(" Ingrese su Contraseña        : ")
+        creaNombre   = input(" Ingrese su Nombre            : ")
+        creaApellido = input(" Ingrese su Apellido          : ")
+        creaEmail    = input(" Ingrese su Email             : ")
+        
+        screen_clear(); titulo();
+        print(f"\n Los datos ingresados son:\n\n Nombre Usuario: {creaUsuario}\n Contraseña: {creaPassword}\n Nombre Completo: {creaNombre} {creaApellido}\n Email: {creaEmail}")
+        creaCliente = input("\n ¿Esta seguro de crear su cuenta en Banco Python?\n Seleccionar Opcion (s/n): ")
+        if creaCliente == "s" or  creaCliente == "S":
+            transito = [{'username': creaUsuario, 'password': creaPassword, 'nombre': creaNombre, 'apellido' : creaApellido, 'email' : creaEmail, 'balance' : 0}]
+            bdUsuarios = leerArchivoClientes()
+            bdUsuarios.append(transito)
+            guardarArchivoClientes(bdUsuarios)
+            cajeroOnline()
+
+        if creaCliente == "n" or creaCliente == "N":
+            cajeroOnline()
+
+        if creaCliente != "s" and creaCliente != "S" and creaCliente != "n" and creaCliente != "N":
+            print("\n ---> Seleccion no valida...")
+            time.sleep(2)
+            cajeroOnline()
+
+    if creaCuenta != 1 and creaCuenta != 2:
+        print("\n ---> Seleccion no valida...")
+        time.sleep(2)
+        cajeroOnline()
+    
+    
+
 def login(username, bdUsuarios):
     cliente = ""
-    screen_clear()
-    print("\n                CAJERO PYTHON 1.0\n           ===========================\n")
-    dato = input("Ingrese su Nombre de Usuario: ")
+    screen_clear() #╚ ╔ ╗╝ ║ ╩ ╦
+    titulo()
+
+    dato = input("\nIngrese su Nombre de Usuario: ")
     for cliente in bdUsuarios:
         if cliente[username] == dato:
             return cliente 
     screen_clear()
-    print("\n                CAJERO PYTHON 1.0\n           ===========================\n")
-    print("El cliente ingresado, no existe en nuestros registros...")
+    titulo()
+    print("\nEl cliente ingresado, no existe en nuestros registros...")
     time.sleep(3)
     screen_clear()
     dato;
     cliente;
     return login('username', bdUsuarios)
+
+def opcionUno():
+    screen_clear()
+    print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║    CONSULTA  DE  SALDO   ║\n           ╚══════════════════════════╝\n")
+    print(f"Estimado {dataCliente.nombre.title()} {dataCliente.apellido.title()}, su saldo disponible es de ${dataCliente.balance} ..\n\n\n")
+    os.system("Pause")
+    return menuSistema()
 
 def opcionDos():
     screen_clear()
@@ -93,6 +152,31 @@ def opcionDos():
         os.system("Pause")
         return menuSistema()
 
+def opcionTres():
+    screen_clear()
+    print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║   DEPOSITO  DE  DINERO   ║\n           ╚══════════════════════════╝\n")
+    print(f"- Saldo disponible en su Cuenta ${dataCliente.balance} ..\n\n")
+    deposito = int(input("\nINGRESE EL MONTO A DEPOSITAR: "))
+    if deposito <= 1000:
+        screen_clear()
+        print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║   DEPOSITO  DE  DINERO   ║\n           ╚══════════════════════════╝\n")
+        print(f"- El monto minimo para deposito es de $1.000.-\nSALDO DISPONIBLE: ${dataCliente.balance}.-\n\n")
+        os.system("Pause")
+        return menuSistema()
+    else:
+        screen_clear()
+        dataCliente.deposito(deposito)
+        print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║   DEPOSITO  DE  DINERO   ║\n           ╚══════════════════════════╝\n")
+        print(f"- Usted ha depositado correctamente ${deposito}.- en su cuenta.\nNUEVO SALDO DISPONIBLE: ${dataCliente.balance}.-\n\n")
+        os.system("Pause")
+        return menuSistema()
+
+def opcionCuatro():
+    screen_clear()
+    print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║    CONSULTA  DE  SALDO   ║\n           ╚══════════════════════════╝\n")
+    print(f"Estimado {dataCliente.nombre.title()} {dataCliente.apellido.title()}\nsu saldo disponible es de ${dataCliente.balance} ..\n\n\n")
+    os.system("Pause")
+    return menuSistema()
 def menuSistema():
     screen_clear()    #╚ ╔ ╗╝ ║ ╩ ╦
     print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║     MENU   PRINCIPAL     ║\n           ╚══════════════════════════╝\n")
@@ -103,36 +187,14 @@ def menuSistema():
     opcion = int(input("\n             Ingrese Opcion: "))
     print(opcion)
 
-    if opcion == 1 :
-        screen_clear()
-        print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║    CONSULTA  DE  SALDO   ║\n           ╚══════════════════════════╝\n")
-        print(f"Estimado {dataCliente.nombre.title()} {dataCliente.apellido.title()}, su saldo disponible es de ${dataCliente.balance} ..\n\n\n")
-        os.system("Pause")
-        return menuSistema()
+    if opcion == 1 : opcionUno()
 
-    if opcion == 2:
-        opcionDos()
+    if opcion == 2: opcionDos()
 
-    if opcion == 3 :
-        screen_clear()
-        print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║   DEPOSITO  DE  DINERO   ║\n           ╚══════════════════════════╝\n")
-        print(f"- Saldo disponible en su Cuenta ${dataCliente.balance} ..\n\n")
-        deposito = int(input("\nINGRESE EL MONTO A DEPOSITAR: "))
-        if deposito <= 1000:
-            screen_clear()
-            print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║   DEPOSITO  DE  DINERO   ║\n           ╚══════════════════════════╝\n")
-            print(f"- El monto minimo para deposito es de $1.000.-\nSALDO DISPONIBLE: ${dataCliente.balance}.-\n\n")
-            os.system("Pause")
-            return menuSistema()
-        else:
-            screen_clear()
-            dataCliente.deposito(deposito)
-            print("\n                CAJERO PYTHON 1.0\n        ═══╦══════════════════════════╦═══\n           ║   DEPOSITO  DE  DINERO   ║\n           ╚══════════════════════════╝\n")
-            print(f"- Usted ha depositado correctamente ${deposito}.- en su cuenta.\nNUEVO SALDO DISPONIBLE: ${dataCliente.balance}.-\n\n")
-            os.system("Pause")
-            return menuSistema()
-        os.system("Pause")
-        return menuSistema()
+    if opcion == 3 : opcionTres()
+    
+    if opcion == 4 : 
+        print("\n Opcion aun sin implementar, favor de utilizar plataforma Web..."); time.sleep(3); return menuSistema()
 
     if opcion == 5 :
         screen_clear()
@@ -148,7 +210,7 @@ def menuSistema():
         screen_clear()
         #print(bdUsuarios)
         #print(dataCliente.balance)
-        guardarArchivoClientes()
+        guardarArchivoClientes(bdUsuarios)
         #os.system("Pause")
 
 
@@ -158,15 +220,13 @@ def menuSistema():
         monty = User("Monty Python", "monty@python.com")
         print(guido.nombre)	# salida: Guido van Rossum
         print(monty.nombre)	# salida: Monty Python
-
-
         print(guido.nombre)	# salida: Michael
         print(monty.nombre)	# salida: Michael
-
-
         User.deposito(100)
 
 while True:
+    leerArchivoClientes()
+    cajeroOnline()
     bdUsuarios = leerArchivoClientes()
     loginCorrecto = login('username', bdUsuarios)
     dataCliente = User(loginCorrecto["username"],loginCorrecto["password"],loginCorrecto["nombre"], loginCorrecto["apellido"], loginCorrecto["email"], loginCorrecto["balance"]) 

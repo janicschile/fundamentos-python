@@ -11,3 +11,6 @@ for clientes in bdUsuarios:
     if clientes['username'] == "oguerrero":
         clientes['account_balance'] = "500"
 print(bdUsuarios) 
+transito = [{'username':'jimmy', 'password':'1234', 'nombre':'Michael', 'apellido' : 'Jackson', 'email' : 'jackson@gmail.com', 'account_balance' : 100000}]
+bdUsuarios.append(transito)
+print(bdUsuarios) 
