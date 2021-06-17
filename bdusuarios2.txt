@@ -1,0 +1,1 @@
+[{'username': 'oguerrero', 'password': '1234', 'nombre': 'Oscar', 'apellido': 'Guerrero', 'email': 'oguerrerog@gmail.com', 'balance': 5500.0}, {'username': 'mjackson', 'password': '1234', 'nombre': 'Michael', 'apellido': 'Jackson', 'email': 'jackson@gmail.com', 'balance': 100000}]
